@@ -1,0 +1,20 @@
+create database DBMS_project;
+create table records (sn INT NOT NULL AUTO_INCREMENT , 
+                        s_roll VARCHAR(12) not null,           //roll of present student
+                        a_date DATE not null,                  //date of attendance
+                        s_code varchar(6) not null,           ///subject code for particular subject
+                        PRIMARY KEY(sn));
+insert into records values (0,"PAS075BCT035",CURDATE(),"CT602");
+select count(presence) from records where 
+        s_roll = "pas075bct035" and 
+        a_date > DATE("2022-01-26") and
+        a_date < DATE("2022-01-28");
+
+create table classes (class varchar(9) not null unique,total_students int default 48);
+insert into classes select distinct substr(roll,1,9) from student.datas;
+
+create table subjects (s_code varchar(6) not null, s_name varchar(30), PRIMARY KEY(s_code));
+insert into subjects values("CT 501","mathematics");
+update subjects set s_code = replace(s_code," ","");  ///before ct 501 after ct501             
+
+create function store_and_next(roll varchar(12),a_date date,s_code varchar(6)) returns varchar(12) deterministic begin insert into records values(0,roll,a_date,s_code); if(substr(roll,10,12) < (select total_students from classes where classes.class  if(substr(roll,10,12) < (select total_students from classes where classes.class = substr(roll,1,8)) then  if substr(roll,9,12) < 10 then return substr(roll,1,9) endif endif  end//;
